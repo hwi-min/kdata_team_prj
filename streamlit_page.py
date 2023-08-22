@@ -133,29 +133,20 @@ def allergen_page(selected_food, selected_language):
 def spiciness_page(selected_food):
     st.title("Spiciness Level")
 
-    # info = '맵기단계'
-    # ac.db_finder(selected_food, info, df)
+    info = '맵기단계'
+    spicy_data = ac.db_finder(selected_food, info, df)
 
-    # # null 값을 선택한 경우
-    # if selected_food == "치즈":
-    #     is_null = st.write("UNKNOWN")
-    #     if is_null:
-    #         spicy_level = None
-    #     else:
-    #     # "치즈"인 경우 슬라이더바를 비활성화하고 불투명하게 표시
-    #         with st.empty():
-    #             spicy_level = None
-    # else:
-    #     spicy_level = st.slider("맵기 단계", 
-    #                             min_value=0, max_value=3, 
-    #                             value=spiciness_levels[selected_food], 
-    #                             step=1, format="🌶️ %d")
-
-    # # 선택된 맵기 단계와 null 여부에 따라 결과 출력
-    # if spicy_level is None:
-    #     st.write(f"{selected_food}의 맵기 단계: Null")
-    # else:
-    #     st.write(f"{selected_food}의 맵기 단계:", spicy_level)
+    if spicy_data is None:
+        st.write(f"<h2><b>{selected_food}의 맵기 단계: Null</b></h2>", unsafe_allow_html=True)
+        with st.empty():
+            # 슬라이더 바를 빈 공간으로 만들어 슬라이더를 사라지게 함
+            spicy_data = None
+    else:
+        st.write(f"{selected_food}의 맵기 단계:", spicy_data)
+        st.slider("맵기 단계", 
+                    min_value=0, max_value=3, 
+                    value=spicy_data, 
+                    step=1, format="🌶️ %d")
 
 
 def exchange_rate_page():
